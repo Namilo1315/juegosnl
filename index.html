@@ -11,7 +11,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Comic Sans MS', cursive;
+      font-family: 'Comic Sans MS';
     }
   
     /* Layout */
@@ -73,9 +73,9 @@
     
     h1 {
       color: #FF6B6B;
-      margin-bottom: 1rem;
+      margin-bottom: 3rem;
       text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      font-size: clamp(1.7rem, 1vw, 2.5rem);
      
     }
   
@@ -185,6 +185,7 @@
       justify-content: center;
       gap: 20px;
       padding: 10px;
+      margin-top: 0px;
       
       background: linear-gradient(135deg, #FFD4E5, #B4E4FF);
     }
@@ -233,480 +234,494 @@
     .back-btn:active {
       transform: scale(0.95);
     }
+    .titulo{
+      margin-top: -50px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      font-size: clamp(1.8rem, 1vw, 2.5rem);
+    }
   </style>
-  </head>
-  <body>
-  
-    <div class="game-selector" id="gameSelector">
-      <h1>¡Elige tu Juego Favorito!</h1>
-      <button onclick="showGame('memory')">
-        <span class="game-icon">🎮</span> Juego de Memoria
-      </button>
-      <button onclick="showGame('math')">
-        <span class="game-icon">🔢</span> Matemáticas 321
-      </button>
-      <button onclick="showGame('drawing')">
-        <span class="game-icon">🎨</span> ¡Dibuja y Crea!
-      </button>
-      <button onclick="showGame('word')">
-        <span class="game-icon">📝</span> Palabras Revueltas
-      </button>
-      <button onclick="showGame('animal')">
-        <span class="game-icon">🐾</span> Quiz de Animales
-      </button>
+ </head>
+<body>
+
+<div class="game-selector" id="gameSelector">
+  <h1 class="titulo">&#xa1;Elige tu Juego Favorito!</h1>
+  <button onclick="showGame('memory')">
+    <span class="game-icon">&#x1f3ae;</span> Juego de Memoria
+  </button>
+  <button onclick="showGame('math')">
+    <span class="game-icon">&#x1f522;</span> Matemáticas 321
+  </button>
+ 
+  <button onclick="showGame('word')">
+    <span class="game-icon">&#x1f4dd;</span> Palabras Revueltas
+  </button>
+  <button onclick="showGame('animal')">
+    <span class="game-icon">&#x1f43e;</span> Quiz de Animales
+  </button>
+</div>
+
+<button class="back-btn" onclick="showGameSelector()" style="display: none;">&#x21a9; Volver</button>
+
+<!-- Sección 1: Juego de Memoria -->
+<div class="section">
+  <div class="game-container">
+    <h1>&#x1f3ae; Juego Memoria</h1>
+    <div id="memory-game"></div>
+    <button class="game-btn" onclick="startMemoryGame()">¡Comenzar Juego!</button>
+  </div>
+</div>
+
+<!-- Sección 2: Juego de Matemáticas -->
+<div class="section">
+  <div class="game-container">
+    <h1>&#x1f522; Matemáticas 321</h1>
+    <div id="math-game">
+      <h2 id="math-question"></h2>
+      <input type="number" id="math-answer" placeholder="Tu respuesta">
+      <button class="game-btn" onclick="checkMathAnswer()">Comprobar</button>
     </div>
-    
-    <button class="back-btn" onclick="showGameSelector()" style="display: none;">↩ Volver</button>
-    
-    <!-- Sección 1: Juego de Memoria -->
-    <div class="section" id="memorySection">
-      <div class="game-container">
-        <h1>🎮 Juego de Memoria</h1>
-        <div id="memory-game"></div>
-        <button class="game-btn" onclick="startMemoryGame()">¡Comenzar Juego!</button>
-      </div>
+    <p id="math-result"></p>
+  </div>
+</div>
+
+<!-- Sección 3: Dibujo Libre -->
+<div class="section">
+  <div class="game-container">
+    <h1>&#x1f3a8; ¡Dibuja y Crea!</h1>
+    <canvas id="drawing-canvas" width="500" height="300"></canvas>
+    <div class="color-picker">
+      <div class="color" style="background: red" onclick="setColor('red')"></div>
+      <div class="color" style="background: blue" onclick="setColor('blue')"></div>
+      <div class="color" style="background: green" onclick="setColor('green')"></div>
+      <div class="color" style="background: yellow" onclick="setColor('yellow')"></div>
     </div>
-    
-    <!-- Sección 2: Juego de Matemáticas -->
-    <div class="section" id="mathSection">
-      <div class="game-container">
-        <h1>🔢 Matemáticas 321</h1>
-        <div id="math-game">
-          <h2 id="math-question"></h2>
-          <input type="number" id="math-answer" placeholder="Tu respuesta">
-          <button class="game-btn" onclick="checkMathAnswer()">Comprobar</button>
-        </div>
-        <p id="math-result"></p>
-      </div>
+    <button class="game-btn" onclick="clearCanvas()">Limpiar</button>
+  </div>
+</div>
+
+<!-- Sección 4: Palabras Revueltas -->
+<div class="section">
+  <div class="game-container">
+    <h1>&#x1f4dd; A Encontrar!</h1>
+    <h2 id="scrambled-word"></h2>
+    <input type="text" id="word-guess" placeholder="¿Qué palabra es?">
+    <button class="game-btn" onclick="checkWord()">Adivinar</button>
+    <p id="word-result"></p>
+  </div>
+</div>
+
+<!-- Sección 5: Quiz de Animales -->
+<div class="section">
+  <div class="game-container">
+    <h1>&#x1f43e; Quiz de Animales</h1>
+    <div id="animal-quiz">
+      <h2 id="animal-question"></h2>
+      <div id="animal-options"></div>
     </div>
-    
-    <!-- Sección 3: Juego de Dibujo -->
-    <div class="section" id="drawingSection">
-      <div class="game-container">
-        <h1>🎨 ¡Dibuja y Crea!</h1>
-        <canvas id="drawing-canvas" width="500" height="500"></canvas>
-        <div class="color-picker" id="color-picker">
-          <div class="color" style="background-color: black;" onclick="changeColor('black')"></div>
-          <div class="color" style="background-color: red;" onclick="changeColor('red')"></div>
-          <div class="color" style="background-color: green;" onclick="changeColor('green')"></div>
-          <div class="color" style="background-color: blue;" onclick="changeColor('blue')"></div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Sección 4: Juego de Palabras -->
-    <div class="section" id="wordSection">
-      <div class="game-container">
-        <h1>📝 Palabras Revueltas</h1>
-        <h2 id="scrambled-word"></h2>
-        <input type="text" id="unscramble-input" placeholder="Tu respuesta">
-        <button class="game-btn" onclick="checkUnscrambleAnswer()">Comprobar</button>
-        <p id="word-result"></p>
-      </div>
-    </div>
-    
-    <!-- Sección 5: Quiz de Animales -->
-    <div class="section" id="animalSection">
-      <div class="game-container">
-        <h1>🐾 Quiz de Animales</h1>
-        <h2 id="animal-question"></h2>
-        <div id="animal-options"></div>
-      </div>
-    </div>
-  
-  <script>const COLORS = ['red', 'blue', 'green', 'yellow'];
-  const MEMORY_EMOJIS = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐼', '🐨'];
-  const MATH_OPERATIONS = ['+', '-', 'x'];
-  const gameState = {
-    memory: {
-      firstCard: null,
-      secondCard: null,
-      canFlip: true
+    <p id="quiz-result"></p>
+  </div>
+</div>
+
+
+<script>const COLORS = ['red', 'blue', 'green', 'yellow'];
+const MEMORY_EMOJIS = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐼', '🐨'];
+const MATH_OPERATIONS = ['+', '-', 'x'];
+const gameState = {
+  memory: {
+    firstCard: null,
+    secondCard: null,
+    canFlip: true
+  },
+  math: {
+    correctAnswer: 0
+  },
+  drawing: {
+    isDrawing: false,
+    currentColor: 'black'
+  },
+  word: {
+    currentWord: '',
+    words: ['PERRO', 'GATO', 'ELEFANTE', 'JIRAFA', 'LEON', 'TIGRE']
+  },
+  quiz: {
+    currentQuestion: 0
+  }
+};
+function startMemoryGame() {
+  const memoryGame = document.getElementById('memory-game');
+  memoryGame.innerHTML = '';
+  const gameEmojis = [...MEMORY_EMOJIS, ...MEMORY_EMOJIS].sort(() => Math.random() - 0.5);
+  gameEmojis.forEach((emoji, index) => {
+    const card = createMemoryCard(emoji);
+    memoryGame.appendChild(card);
+  });
+}
+function createMemoryCard(emoji) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.dataset.value = emoji;
+  card.onclick = () => flipCard(card);
+  return card;
+}
+function flipCard(card) {
+  const {
+    firstCard,
+    secondCard,
+    canFlip
+  } = gameState.memory;
+  if (!canFlip || card.textContent || card === firstCard) return;
+  animateCardFlip(card);
+  card.textContent = card.dataset.value;
+  if (!gameState.memory.firstCard) {
+    gameState.memory.firstCard = card;
+  } else {
+    gameState.memory.secondCard = card;
+    gameState.memory.canFlip = false;
+    checkMatch();
+  }
+}
+function animateCardFlip(card) {
+  card.style.transform = 'scale(0.95)';
+  setTimeout(() => card.style.transform = '', 100);
+}
+function generateMathQuestion() {
+  const {
+    num1,
+    num2,
+    operation
+  } = generateMathProblem();
+  const question = `${num1} ${operation} ${num2} = ?`;
+  gameState.math.correctAnswer = calculateAnswer(num1, num2, operation);
+  document.getElementById('math-question').textContent = question;
+  document.getElementById('math-result').textContent = '';
+}
+function generateMathProblem() {
+  let num1 = Math.floor(Math.random() * 10) + 1;
+  let num2 = Math.floor(Math.random() * 10) + 1;
+  const operation = MATH_OPERATIONS[Math.floor(Math.random() * MATH_OPERATIONS.length)];
+  if (operation === '-' && num2 > num1) {
+    [num1, num2] = [num2, num1];
+  }
+  return {
+    num1,
+    num2,
+    operation
+  };
+}
+function setupDrawingHandlers() {
+  const canvas = document.getElementById('drawing-canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.strokeStyle = gameState.drawing.currentColor;
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  const events = {
+    mouse: {
+      down: 'mousedown',
+      move: 'mousemove',
+      up: 'mouseup',
+      out: 'mouseout'
     },
-    math: {
-      correctAnswer: 0
-    },
-    drawing: {
-      isDrawing: false,
-      currentColor: 'black'
-    },
-    word: {
-      currentWord: '',
-      words: ['PERRO', 'GATO', 'ELEFANTE', 'JIRAFA', 'LEON', 'TIGRE']
-    },
-    quiz: {
-      currentQuestion: 0
+    touch: {
+      start: 'touchstart',
+      move: 'touchmove',
+      end: 'touchend'
     }
   };
-  function startMemoryGame() {
-    const memoryGame = document.getElementById('memory-game');
-    memoryGame.innerHTML = '';
-    const gameEmojis = [...MEMORY_EMOJIS, ...MEMORY_EMOJIS].sort(() => Math.random() - 0.5);
-    gameEmojis.forEach((emoji, index) => {
-      const card = createMemoryCard(emoji);
-      memoryGame.appendChild(card);
+  Object.entries(events.mouse).forEach(([type, event]) => {
+    canvas.addEventListener(event, e => handleDrawingEvent(e, type));
+  });
+  Object.entries(events.touch).forEach(([type, event]) => {
+    canvas.addEventListener(event, e => {
+      e.preventDefault();
+      handleDrawingEvent(e, type);
     });
+  });
+}
+function handleDrawingEvent(e, type) {
+  const canvas = document.getElementById('drawing-canvas');
+  const ctx = canvas.getContext('2d');
+  const rect = canvas.getBoundingClientRect();
+  if (type.includes('move') && !gameState.drawing.isDrawing) return;
+  const point = getEventPoint(e, rect);
+  updateDrawing(ctx, point, type);
+}
+function showGame(gameId) {
+  resetGameState();
+  toggleGameVisibility(gameId);
+  initializeGame(gameId);
+}
+function resetGameState() {
+  Object.assign(gameState.memory, {
+    firstCard: null,
+    secondCard: null,
+    canFlip: true
+  });
+  gameState.quiz.currentQuestion = 0;
+}
+function toggleGameVisibility(gameId) {
+  const gameSelector = document.getElementById('gameSelector');
+  const backBtn = document.querySelector('.back-btn');
+  const sections = document.querySelectorAll('.section');
+  gameSelector.style.display = 'none';
+  backBtn.style.display = 'block';
+  sections.forEach(section => section.style.display = 'none');
+  const gameIndex = ['memory', 'math', 'drawing', 'word', 'animal'].indexOf(gameId);
+  if (gameIndex >= 0 && sections[gameIndex]) {
+    sections[gameIndex].style.display = 'flex';
   }
-  function createMemoryCard(emoji) {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.dataset.value = emoji;
-    card.onclick = () => flipCard(card);
-    return card;
-  }
-  function flipCard(card) {
-    const {
-      firstCard,
-      secondCard,
-      canFlip
-    } = gameState.memory;
-    if (!canFlip || card.textContent || card === firstCard) return;
-    animateCardFlip(card);
-    card.textContent = card.dataset.value;
-    if (!gameState.memory.firstCard) {
-      gameState.memory.firstCard = card;
-    } else {
-      gameState.memory.secondCard = card;
-      gameState.memory.canFlip = false;
-      checkMatch();
-    }
-  }
-  function animateCardFlip(card) {
-    card.style.transform = 'scale(0.95)';
-    setTimeout(() => card.style.transform = '', 100);
-  }
-  function generateMathQuestion() {
-    const {
-      num1,
-      num2,
-      operation
-    } = generateMathProblem();
-    const question = `${num1} ${operation} ${num2} = ?`;
-    gameState.math.correctAnswer = calculateAnswer(num1, num2, operation);
-    document.getElementById('math-question').textContent = question;
-    document.getElementById('math-result').textContent = '';
-  }
-  function generateMathProblem() {
-    let num1 = Math.floor(Math.random() * 10) + 1;
-    let num2 = Math.floor(Math.random() * 10) + 1;
-    const operation = MATH_OPERATIONS[Math.floor(Math.random() * MATH_OPERATIONS.length)];
-    if (operation === '-' && num2 > num1) {
-      [num1, num2] = [num2, num1];
-    }
-    return {
-      num1,
-      num2,
-      operation
-    };
-  }
-  function setupDrawingHandlers() {
-    const canvas = document.getElementById('drawing-canvas');
-    const events = {
-      mouse: {
-        down: 'mousedown',
-        move: 'mousemove',
-        up: 'mouseup',
-        out: 'mouseout'
-      },
-      touch: {
-        start: 'touchstart',
-        move: 'touchmove',
-        end: 'touchend'
-      }
-    };
-    Object.entries(events.mouse).forEach(([type, event]) => {
-      canvas.addEventListener(event, e => handleDrawingEvent(e, type));
-    });
-    Object.entries(events.touch).forEach(([type, event]) => {
-      canvas.addEventListener(event, e => handleDrawingEvent(e, type));
-    });
-  }
-  function handleDrawingEvent(e, type) {
-    const canvas = document.getElementById('drawing-canvas');
-    const ctx = canvas.getContext('2d');
-    const rect = canvas.getBoundingClientRect();
-    if (type.includes('move') && !gameState.drawing.isDrawing) return;
-    const point = getEventPoint(e, rect);
-    updateDrawing(ctx, point, type);
-  }
-  function showGame(gameId) {
-    resetGameState();
-    toggleGameVisibility(gameId);
-    initializeGame(gameId);
-  }
-  function resetGameState() {
-    Object.assign(gameState.memory, {
-      firstCard: null,
-      secondCard: null,
-      canFlip: true
-    });
-    gameState.quiz.currentQuestion = 0;
-  }
-  function toggleGameVisibility(gameId) {
-    const gameSelector = document.getElementById('gameSelector');
-    const backBtn = document.querySelector('.back-btn');
-    const sections = document.querySelectorAll('.section');
-    gameSelector.style.display = 'none';
-    backBtn.style.display = 'block';
-    sections.forEach(section => section.style.display = 'none');
-    const gameIndex = ['memory', 'math', 'drawing', 'word', 'animal'].indexOf(gameId);
-    if (gameIndex >= 0 && sections[gameIndex]) {
-      sections[gameIndex].style.display = 'flex';
-    }
-  }
-  function initializeGame(gameId) {
-    switch (gameId) {
-      case 'memory':
-        startMemoryGame();
-        break;
-      case 'math':
-        generateMathQuestion();
-        break;
-      case 'drawing':
-        clearCanvas();
-        break;
-      case 'word':
-        scrambleWord();
-        break;
-      case 'animal':
-        showQuestion();
-        break;
-    }
-  }
-  function showGameSelector() {
-    const gameSelector = document.getElementById('gameSelector');
-    const backBtn = document.querySelector('.back-btn');
-    const sections = document.querySelectorAll('.section');
-    gameSelector.style.display = 'flex';
-    backBtn.style.display = 'none';
-    sections.forEach(section => section.style.display = 'none');
-    document.querySelectorAll('input').forEach(input => input.value = '');
-    document.querySelectorAll('p[id$="result"]').forEach(p => p.textContent = '');
-    if (typeof clearCanvas === 'function') {
+}
+function initializeGame(gameId) {
+  switch (gameId) {
+    case 'memory':
+      startMemoryGame();
+      break;
+    case 'math':
+      generateMathQuestion();
+      break;
+    case 'drawing':
       clearCanvas();
-    }
+      break;
+    case 'word':
+      scrambleWord();
+      break;
+    case 'animal':
+      showQuestion();
+      break;
   }
-  function checkMatch() {
-    const allMatched = [...document.querySelectorAll('.card')].every(card => card.textContent !== '');
-    if (gameState.memory.firstCard.dataset.value === gameState.memory.secondCard.dataset.value) {
-      gameState.memory.firstCard.style.background = '#4CAF50';
-      gameState.memory.secondCard.style.background = '#4CAF50';
+}
+function showGameSelector() {
+  const gameSelector = document.getElementById('gameSelector');
+  const backBtn = document.querySelector('.back-btn');
+  const sections = document.querySelectorAll('.section');
+  gameSelector.style.display = 'flex';
+  backBtn.style.display = 'none';
+  sections.forEach(section => section.style.display = 'none');
+  document.querySelectorAll('input').forEach(input => input.value = '');
+  document.querySelectorAll('p[id$="result"]').forEach(p => p.textContent = '');
+  clearCanvas();
+}
+function checkMatch() {
+  const allMatched = [...document.querySelectorAll('.card')].every(card => card.textContent !== '');
+  if (gameState.memory.firstCard.dataset.value === gameState.memory.secondCard.dataset.value) {
+    gameState.memory.firstCard.style.background = '#4CAF50';
+    gameState.memory.secondCard.style.background = '#4CAF50';
+    gameState.memory.firstCard = null;
+    gameState.memory.secondCard = null;
+    gameState.memory.canFlip = true;
+    if (allMatched) {
+      setTimeout(() => {
+        alert('¡Felicitaciones! ¡Has ganado! 🎉');
+        startMemoryGame();
+      }, 500);
+    }
+  } else {
+    setTimeout(() => {
+      gameState.memory.firstCard.textContent = '';
+      gameState.memory.secondCard.textContent = '';
       gameState.memory.firstCard = null;
       gameState.memory.secondCard = null;
       gameState.memory.canFlip = true;
-      if (allMatched) {
-        setTimeout(() => {
-          alert('¡Felicitaciones! ¡Has ganado! 🎉');
-          startMemoryGame();
-        }, 500);
-      }
-    } else {
-      setTimeout(() => {
-        gameState.memory.firstCard.textContent = '';
-        gameState.memory.secondCard.textContent = '';
-        gameState.memory.firstCard = null;
-        gameState.memory.secondCard = null;
-        gameState.memory.canFlip = true;
-      }, 1000);
-    }
+    }, 1000);
   }
-  function checkMathAnswer() {
-    const input = document.getElementById('math-answer');
-    const userAnswer = parseInt(input.value);
-    const result = document.getElementById('math-result');
-    if (isNaN(userAnswer)) {
-      result.textContent = 'Por favor ingresa un número';
-      return;
-    }
-    if (userAnswer === gameState.math.correctAnswer) {
-      result.textContent = '¡Correcto! 🎉';
-      setTimeout(() => {
-        generateMathQuestion();
-        input.value = '';
-      }, 1500);
-    } else {
-      result.textContent = 'Inténtalo de nuevo 😊';
+}
+function checkMathAnswer() {
+  const input = document.getElementById('math-answer');
+  const userAnswer = parseInt(input.value);
+  const result = document.getElementById('math-result');
+  if (isNaN(userAnswer)) {
+    result.textContent = 'Por favor ingresa un número';
+    return;
+  }
+  if (userAnswer === gameState.math.correctAnswer) {
+    result.textContent = '¡Correcto! ';
+    setTimeout(() => {
+      generateMathQuestion();
       input.value = '';
-    }
+      result.textContent = '';
+    }, 1500);
+  } else {
+    result.textContent = 'Inténtalo de nuevo ';
+    input.value = '';
   }
-  function getEventPoint(e, rect) {
-    if (e.type.includes('touch')) {
-      return {
-        x: e.touches[0].clientX - rect.left,
-        y: e.touches[0].clientY - rect.top
-      };
-    } else {
-      return {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      };
-    }
+}
+function getEventPoint(e, rect) {
+  if (e.type.includes('touch')) {
+    return {
+      x: e.touches[0].clientX - rect.left,
+      y: e.touches[0].clientY - rect.top
+    };
+  } else {
+    return {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    };
   }
-  function updateDrawing(ctx, point, type) {
-    if (type.includes('down') || type.includes('start')) {
-      gameState.drawing.isDrawing = true;
-      ctx.beginPath();
-      ctx.moveTo(point.x, point.y);
-    } else if (type.includes('move')) {
-      ctx.lineTo(point.x, point.y);
-      ctx.stroke();
-    } else if (type.includes('up') || type.includes('end')) {
-      gameState.drawing.isDrawing = false;
-      ctx.beginPath();
-    }
+}
+function updateDrawing(ctx, point, type) {
+  if (type.includes('down') || type.includes('start')) {
+    gameState.drawing.isDrawing = true;
+    ctx.beginPath();
+    ctx.moveTo(point.x, point.y);
+  } else if (type.includes('move')) {
+    ctx.lineTo(point.x, point.y);
+    ctx.stroke();
+  } else if (type.includes('up') || type.includes('end')) {
+    gameState.drawing.isDrawing = false;
+    ctx.beginPath();
   }
-  function calculateAnswer(num1, num2, operation) {
-    switch (operation) {
-      case '+':
-        return num1 + num2;
-      case '-':
-        return num1 - num2;
-      case 'x':
-        return num1 * num2;
-    }
+}
+function calculateAnswer(num1, num2, operation) {
+  switch (operation) {
+    case '+':
+      return num1 + num2;
+    case '-':
+      return num1 - num2;
+    case 'x':
+      return num1 * num2;
   }
-  function scrambleWord() {
-    const wordIndex = Math.floor(Math.random() * gameState.word.words.length);
-    const word = gameState.word.words[wordIndex];
-    const scrambled = word.split('').sort(() => Math.random() - 0.5).join('');
-    document.getElementById('scrambled-word').textContent = scrambled;
-    gameState.word.currentWord = word;
+}
+function scrambleWord() {
+  const wordIndex = Math.floor(Math.random() * gameState.word.words.length);
+  const word = gameState.word.words[wordIndex];
+  const scrambled = word.split('').sort(() => Math.random() - 0.5).join('');
+  document.getElementById('scrambled-word').textContent = scrambled;
+  gameState.word.currentWord = word;
+}
+function checkWord() {
+  const guess = document.getElementById('word-guess').value.toUpperCase();
+  const result = document.getElementById('word-result');
+  if (guess === gameState.word.currentWord) {
+    result.textContent = '¡Correcto! 🎉';
+    setTimeout(scrambleWord, 1500);
+  } else {
+    result.textContent = 'Inténtalo de nuevo 😊';
   }
-  function checkWord() {
-    const guess = document.getElementById('word-guess').value.toUpperCase();
-    const result = document.getElementById('word-result');
-    if (guess === gameState.word.currentWord) {
-      result.textContent = '¡Correcto! 🎉';
-      setTimeout(scrambleWord, 1500);
-    } else {
-      result.textContent = 'Inténtalo de nuevo 😊';
-    }
-    document.getElementById('word-guess').value = '';
+  document.getElementById('word-guess').value = '';
+}
+const questions = [{
+  question: '¿Qué animal hace "guau"?',
+  options: ['Perro', 'Gato', 'Vaca', 'Pato'],
+  correct: 0
+}, {
+  question: '¿Qué animal tiene el cuello más largo?',
+  options: ['Elefante', 'Jirafa', 'Cebra', 'León'],
+  correct: 1
+}, {
+  question: '¿Cuál de estos animales vive en el agua?',
+  options: ['Delfín', 'Conejo', 'Águila', 'Mono'],
+  correct: 0
+}, {
+  question: '¿Qué animal tiene rayas negras y blancas?',
+  options: ['León', 'Tigre', 'Cebra', 'Jirafa'],
+  correct: 2
+}, {
+  question: '¿Cuál es el animal más grande de la Tierra?',
+  options: ['Elefante', 'Jirafa', 'Ballena Azul', 'Gorila'],
+  correct: 2
+}, {
+  question: '¿Qué animal salta en una bolsa?',
+  options: ['Koala', 'Canguro', 'Pingüino', 'Oso'],
+  correct: 1
+}, {
+  question: '¿Cuál de estos animales puede volar?',
+  options: ['Pingüino', 'Gallina', 'Colibrí', 'Avestruz'],
+  correct: 2
+}, {
+  question: '¿Qué animal duerme colgado boca abajo?',
+  options: ['Murciélago', 'Búho', 'Mono', 'Pájaro'],
+  correct: 0
+}, {
+  question: '¿Cuál de estos animales hiberna en invierno?',
+  options: ['León', 'Pingüino', 'Oso', 'Jirafa'],
+  correct: 2
+}, {
+  question: '¿Qué animal es conocido como el rey de la selva?',
+  options: ['Tigre', 'Elefante', 'Mono', 'León'],
+  correct: 3
+}, {
+  question: '¿Cuál de estos animales tiene una trompa?',
+  options: ['Elefante', 'Jirafa', 'Hipopótamo', 'Rinoceronte'],
+  correct: 0
+}, {
+  question: '¿Qué animal hace "miau"?',
+  options: ['Perro', 'Gato', 'Vaca', 'Oveja'],
+  correct: 1
+}, {
+  question: '¿Cuál de estos animales pone huevos?',
+  options: ['Delfín', 'Vaca', 'Gallina', 'Perro'],
+  correct: 2
+}, {
+  question: '¿Qué animal salta de árbol en árbol?',
+  options: ['Elefante', 'Ardilla', 'Jirafa', 'Cebra'],
+  correct: 1
+}, {
+  question: '¿Cuál de estos animales vive en el Polo Norte?',
+  options: ['Oso Polar', 'León', 'Mono', 'Serpiente'],
+  correct: 0
+}];
+function showQuestion() {
+  const quiz = questions[gameState.quiz.currentQuestion];
+  document.getElementById('animal-question').textContent = quiz.question;
+  const options = document.getElementById('animal-options');
+  options.innerHTML = '';
+  quiz.options.forEach((option, index) => {
+    const button = document.createElement('button');
+    button.className = 'game-btn';
+    button.textContent = option;
+    button.onclick = () => checkAnswer(index);
+    options.appendChild(button);
+  });
+}
+function checkAnswer(index) {
+  const quiz = questions[gameState.quiz.currentQuestion];
+  const result = document.getElementById('quiz-result');
+  const buttons = document.querySelectorAll('#animal-options .game-btn');
+  buttons.forEach(btn => btn.style.pointerEvents = 'none');
+  if (index === quiz.correct) {
+    buttons[index].style.background = '#4CAF50';
+    result.textContent = '¡Correcto! 🎉';
+    gameState.quiz.currentQuestion = (gameState.quiz.currentQuestion + 1) % questions.length;
+    setTimeout(() => {
+      buttons.forEach(btn => btn.style.pointerEvents = '');
+      showQuestion();
+    }, 1500);
+  } else {
+    buttons[index].style.background = '#f44336';
+    buttons[quiz.correct].style.background = '#4CAF50';
+    result.textContent = 'Inténtalo de nuevo 😊';
+    setTimeout(() => {
+      buttons.forEach(btn => {
+        btn.style.pointerEvents = '';
+        btn.style.background = '';
+      });
+    }, 1500);
   }
-  const questions = [{
-    question: '¿Qué animal hace "guau"?',
-    options: ['Perro', 'Gato', 'Vaca', 'Pato'],
-    correct: 0
-  }, {
-    question: '¿Qué animal tiene el cuello más largo?',
-    options: ['Elefante', 'Jirafa', 'Cebra', 'León'],
-    correct: 1
-  }, {
-    question: '¿Cuál de estos animales vive en el agua?',
-    options: ['Delfín', 'Conejo', 'Águila', 'Mono'],
-    correct: 0
-  }, {
-    question: '¿Qué animal tiene rayas negras y blancas?',
-    options: ['León', 'Tigre', 'Cebra', 'Jirafa'],
-    correct: 2
-  }, {
-    question: '¿Cuál es el animal más grande de la Tierra?',
-    options: ['Elefante', 'Jirafa', 'Ballena Azul', 'Gorila'],
-    correct: 2
-  }, {
-    question: '¿Qué animal salta en una bolsa?',
-    options: ['Koala', 'Canguro', 'Pingüino', 'Oso'],
-    correct: 1
-  }, {
-    question: '¿Cuál de estos animales puede volar?',
-    options: ['Pingüino', 'Gallina', 'Colibrí', 'Avestruz'],
-    correct: 2
-  }, {
-    question: '¿Qué animal duerme colgado boca abajo?',
-    options: ['Murciélago', 'Búho', 'Mono', 'Pájaro'],
-    correct: 0
-  }, {
-    question: '¿Cuál de estos animales hiberna en invierno?',
-    options: ['León', 'Pingüino', 'Oso', 'Jirafa'],
-    correct: 2
-  }, {
-    question: '¿Qué animal es conocido como el rey de la selva?',
-    options: ['Tigre', 'Elefante', 'Mono', 'León'],
-    correct: 3
-  }, {
-    question: '¿Cuál de estos animales tiene una trompa?',
-    options: ['Elefante', 'Jirafa', 'Hipopótamo', 'Rinoceronte'],
-    correct: 0
-  }, {
-    question: '¿Qué animal hace "miau"?',
-    options: ['Perro', 'Gato', 'Vaca', 'Oveja'],
-    correct: 1
-  }, {
-    question: '¿Cuál de estos animales pone huevos?',
-    options: ['Delfín', 'Vaca', 'Gallina', 'Perro'],
-    correct: 2
-  }, {
-    question: '¿Qué animal salta de árbol en árbol?',
-    options: ['Elefante', 'Ardilla', 'Jirafa', 'Cebra'],
-    correct: 1
-  }, {
-    question: '¿Cuál de estos animales vive en el Polo Norte?',
-    options: ['Oso Polar', 'León', 'Mono', 'Serpiente'],
-    correct: 0
-  }];
-  function showQuestion() {
-    const quiz = questions[gameState.quiz.currentQuestion];
-    document.getElementById('animal-question').textContent = quiz.question;
-    const options = document.getElementById('animal-options');
-    options.innerHTML = '';
-    quiz.options.forEach((option, index) => {
-      const button = document.createElement('button');
-      button.className = 'game-btn';
-      button.textContent = option;
-      button.onclick = () => checkAnswer(index);
-      options.appendChild(button);
+}
+function clearCanvas() {
+  const canvas = document.getElementById('drawing-canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+function setColor(color) {
+  gameState.drawing.currentColor = color;
+}
+setupDrawingHandlers();
+window.addEventListener('DOMContentLoaded', () => {
+  const buttons = document.querySelectorAll('.game-selector button, .back-btn, .game-btn');
+  buttons.forEach(button => {
+    button.addEventListener('touchstart', e => {
+      e.preventDefault();
+      button.style.transform = 'scale(0.95)';
     });
-  }
-  function checkAnswer(index) {
-    const quiz = questions[gameState.quiz.currentQuestion];
-    const result = document.getElementById('quiz-result');
-    const buttons = document.querySelectorAll('#animal-options .game-btn');
-    buttons.forEach(btn => btn.style.pointerEvents = 'none');
-    if (index === quiz.correct) {
-      buttons[index].style.background = '#4CAF50';
-      result.textContent = '¡Correcto! 🎉';
-      gameState.quiz.currentQuestion = (gameState.quiz.currentQuestion + 1) % questions.length;
-      setTimeout(() => {
-        buttons.forEach(btn => btn.style.pointerEvents = '');
-        showQuestion();
-      }, 1500);
-    } else {
-      buttons[index].style.background = '#f44336';
-      buttons[quiz.correct].style.background = '#4CAF50';
-      result.textContent = 'Inténtalo de nuevo 😊';
-      setTimeout(() => {
-        buttons.forEach(btn => {
-          btn.style.pointerEvents = '';
-          btn.style.background = '';
-        });
-      }, 1500);
-    }
-  }
-  function clearCanvas() {
-    const canvas = document.getElementById('drawing-canvas');
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
-  function setColor(color) {
-    gameState.drawing.currentColor = color;
-  }
-  setupDrawingHandlers();
-  window.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.game-selector button, .back-btn, .game-btn');
-    buttons.forEach(button => {
-      button.addEventListener('touchstart', e => {
-        e.preventDefault();
-        button.style.transform = 'scale(0.95)';
-      });
-      button.addEventListener('touchend', e => {
-        e.preventDefault();
-        button.style.transform = '';
-        button.click();
-      });
+    button.addEventListener('touchend', e => {
+      e.preventDefault();
+      button.style.transform = '';
+      button.click();
     });
   });
-  window.onload = function () {
-    showGameSelector();
-  };</script>
-  </body>
-  </html>
+});
+window.onload = function () {
+  showGameSelector();
+};</script>
+</body>
+</html>
